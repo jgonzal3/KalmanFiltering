@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 '''
-Errors in estimates of first state of a first-order polynomial Kalman filter:
+Errors in estimates of first state and second state of a first-order polynomial Kalman filter:
 fairly insensitive to the initial covariance matrix.
 '''
 
