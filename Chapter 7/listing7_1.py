@@ -58,20 +58,30 @@ for beta in BETA_:
 	plt.plot(t,x,label='Beta ='+ str(BETA), linewidth=0.6)
 	plt.figure(2)
 	plt.plot(t,v,label='Beta ='+str(BETA), linewidth=0.6)
+	plt.figure(3)
+	plt.plot(t,a,label='Beta ='+str(BETA), linewidth=0.6)
 	
 plt.figure(1)
 plt.grid(True)
 plt.legend()
 plt.xlabel('Time (Sec)')
-plt.ylabel('Distance')
+plt.ylabel('Altitud, x')
 plt.xlim(0,30)
 
 plt.figure(2)
 plt.grid(True)
 plt.legend()
 plt.xlabel('Time (Sec)')
-plt.ylabel('Speed')
+plt.ylabel('Velocity, x_dot')
 plt.xlim(0,30)
-plt.show()
+
+plt.figure(3)
+plt.grid(True)
+plt.legend()
+plt.xlabel('Time (Sec)')
+plt.ylabel('Acceleration, xd_dot')
+plt.xlim(0,30)
 
 plt.show()
+
+
