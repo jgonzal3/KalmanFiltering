@@ -96,7 +96,7 @@ while (T <= 30.0):
 		q_22=PHIS*(TS+F22*TS*TS+F22*F22*TS*TS*TS/3.0)
 		Q = np.matrix([[q_11, q_12],[q_21, q_22]])
 			
-		M=PHI*P*PHI.transpose()+PHIS*Q
+		M=PHI*P*PHI.transpose()+Q
 		K = M*HMAT.transpose()*(inv(HMAT*M*HMAT.transpose() + R))
 		P=(I-K*HMAT)*M	
 		XNOISE = GAUSS_PY(SIGMA_NOISE)
