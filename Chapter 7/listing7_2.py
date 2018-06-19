@@ -3,11 +3,9 @@ import math
 from numpy.linalg import inv
 import matplotlib.pyplot as plt
 
-# Local calls to own modules
-from gauss import GAUSS_PY
-
-WN=6.28*.1
-W=6.28*1.
+def GAUSS_PY(SIG):
+	X=(random.uniform(-3.0,3.0))*SIG
+	return (X)	
 
 def f1(x1,x2,t):
 	dx1dt = x2
@@ -34,12 +32,13 @@ sp22=[]
 sp22n=[]
 xddot_hat_ERR=[]
 x2ddold =[]
+res = []
 
 TS=.1
 XH=0
 XDH=0
 XDDH=0
-SIGMA_NOISE=1000.
+SIGMA_NOISE=25.
 X1=200000.
 X1D=-6000.
 BETA=5000.
@@ -101,8 +100,29 @@ while (T <= 30.0):
 		K = M*HMAT.transpose()*(inv(HMAT*M*HMAT.transpose() + R))
 		P=(I-K*HMAT)*M	
 		XNOISE = GAUSS_PY(SIGMA_NOISE)
-		XDB= XDH+TS*f2(XH,XDH,T)
-		XB = XH+TS*XDB
+				T_ = 0
+		if (rk == 1):
+			# Use integration Runge-Kutta to propagate XH and XDH
+			T_ = 0
+			while (T_< TS):
+				k11 = dt*f1(XH,XDH,T_)
+				k21 = dt*f2(XH,XDH,T_)
+				k12 = dt*f1(XH+0.5*k11,XDH+0.5*k21,T_+0.5*dt)
+				k22 = dt*f2(XH+0.5*k11,XDH+0.5*k21,T_+0.5*dt)
+				k13 = dt*f1(XH+0.5*k12,XDH+0.5*k22,T_+0.5*dt)
+				k23 = dt*f2(XH+0.5*k12,XDH+0.5*k22,T_+0.5*dt)
+				k14 = dt*f1(XH+k13,XDH+k23,T_+dt)
+				k24 = dt*f2(XH+k13,XDH+k23,T_+dt)
+				XH = XH + (k11+2*k12+2*k13+k14)/6
+				XDH = XDH + (k21+2*k22+2*k23+k24)/6
+				XDB = XDH
+				XB = XH
+				T_ = T_+dt
+		else:
+			# Use Euler integration to propagate XH and XDH	
+			XDB= XDH+TS*f2(XH,XDH,T)
+			XB = XH+TS*XDB
+			
 		XS = X1+XNOISE
 		RES= XS-XB
 		XH=XB+K[0,0]*RES
@@ -116,6 +136,7 @@ while (T <= 30.0):
 		t.append(T)
 		x1.append(X1)
 		xs.append(XS)
+		res.append(RES)
 		x1_hat.append(XH)
 		x1dot.append(X1D)
 		x1dot_hat.append(XDH)
@@ -147,6 +168,15 @@ plt.ylabel('Estimate and True Signal')
 plt.xlim(0,30)
 plt.legend()
 plt.ylim(-250,250)
+
+plt.figure(3)
+plt.grid(True)
+plt.plot(t,res,label='residuals', linewidth=0.6)
+plt.xlabel('Time (Sec)')
+plt.ylabel('Estimate and True Signal')
+plt.xlim(0,30)
+plt.legend()
+plt.ylim(-100,100)
 
 plt.show()
 
