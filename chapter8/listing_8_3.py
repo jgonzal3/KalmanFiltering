@@ -60,7 +60,7 @@ sp22n=[]
 x1ddot_hat_ERR=[]
 sp33=[]
 sp33n=[]
-
+beta_hat=[]
 res=[]
 
 
@@ -159,6 +159,7 @@ while (T <= 30.0):
 		x1ddot_hat_ERR.append(ERRX1DD)
 		sp33.append(SP33)
 		sp33n.append(SP33N)
+		beta_hat.append(BETAH)
 
 				
 '''
@@ -208,4 +209,14 @@ plt.ylabel('Estimate and True Signal')
 plt.xlim(0,30)
 plt.legend()
 plt.ylim(-400,400)
+
+plt.figure(5)
+plt.grid(True)
+plt.plot(t,[BETA for x in t],label='beta actual', linewidth=0.6)
+plt.plot(t,beta_hat,label='beta predicted', linewidth=0.6)
+plt.xlabel('Time (Sec)')
+plt.ylabel('Estimate and True Signal')
+plt.xlim(0,30)
+plt.legend()
+plt.ylim(-4000,4000)
 plt.show()
