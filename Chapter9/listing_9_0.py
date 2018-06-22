@@ -46,21 +46,43 @@ xdot=[]
 ydot=[]
 xdot_hat = []
 ydot_hat =[]
+x1ddot_hat=[]
+x1_hat_ERR=[]
+sp11=[]
+sp11n=[]
+x1dot_hat_ERR=[]
+sp22=[]
+sp22n=[]
+x1ddot_hat_ERR=[]
+sp33=[]
+sp33n=[]
+beta_hat=[]
+res=[]
 
+
+PHIS=322*322/30
+TS=.1
 X=0.
+X1D=-6000.
+X1DD = 0
 Y=0.0
+BETAH=800.
+X1H=200025.
+X1DH=-6150.
+X1DDH=0.0
+TS=0.1
 TF=140.
 T=0.0
 G=32.2
+S=0
 SIGMA_NOISE_THETA=0.001
-SIGMA_NOISE_R=200
+SIGMA_NOISE_R=100
 
-H = 0.8
+H = 1
 V0 =  3000
 RAD = 180/math.pi
 THETA0 = 45/RAD
-# Location of Radar
-XR = -150000  
+XR = -150000
 YR = 0
 XH = 0
 YH = 0
@@ -97,7 +119,9 @@ while (T< TF):
 	xdot_hat.append(XDH)
 	ydot_hat.append(YDH)
 
-	
+VX = [V0*math.cos(THETA0) for k in t]
+VY = [V0*math.sin(THETA0) - G*k for k in t]
+
 plt.figure(1)
 plt.grid(True)
 plt.plot(x,y,label='trajectory', linewidth=0.6)
@@ -111,12 +135,21 @@ plt.ylim(0,100000)
 plt.figure(2)
 plt.grid(True)
 plt.plot(t,xdot_hat,label='Velocity Simulated', linewidth=0.6)
-plt.plot(t, [V0*math.cos(THETA0) for k in t],label='Velocity Actual', linewidth=0.6)
-plt.xlabel('Downrange (Ft)')
-plt.ylabel('Altitude (Ft)')
+plt.plot(t, VX,label='Velocity Actual', linewidth=0.6)
+plt.xlabel('Time (Sec)')
+plt.ylabel('Velocity (Ft/s)')
 plt.xlim(2,140)
 plt.legend()
 plt.ylim(0,5000)
 
+plt.figure(3)
+plt.grid(True)
+plt.plot(t,ydot_hat,label='Velocity Simulated', linewidth=0.6)
+plt.plot(t,VY,label='Velocity Actual', linewidth=0.6)
+plt.xlabel('Time (Sec)')
+plt.ylabel('Velocity (Ft/s)')
+plt.xlim(2,140)
+plt.legend()
+plt.ylim(-5000,5000)
 
 plt.show()
