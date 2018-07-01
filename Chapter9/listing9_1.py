@@ -222,7 +222,7 @@ while (YT >= 0.0):
 			YTDB=YTDH-G*TS
 			
 		RTB=math.sqrt((XTB-XR)**2+(YTB-YR)**2)
-		THETB=math.atan((YTB-YR)/(XTB-XR))
+		THETB=math.atan2((YTB-YR),(XTB-XR))
 		h11 = -(YTB - YR)/RTB**2
 		h12 = 0.0
 		h13 = (XTB - XR)/RTB**2
@@ -235,7 +235,7 @@ while (YT >= 0.0):
 		M=PHI*P*PHI.transpose() +PHIS*Q
 		K = M*HMAT.transpose()*(inv(HMAT*M*HMAT.transpose() + R))
 		P=(I-K*HMAT)*M	
-		THET=math.atan((YT-YR)/(XT-XR))
+		THET=math.atan2((YT-YR),(XT-XR))
 		RT=math.sqrt((XT-XR)**2+(YT-YR)**2)
 		THETMEAS=THET+GAUSS_PY(SIGMA_NOISE_THETA)
 		RTMEAS=RT+GAUSS_PY(SIGMA_NOISE_R)
