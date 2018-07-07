@@ -267,7 +267,7 @@ plt.xlabel('Time (Sec)')
 plt.ylabel('X dot Signal')
 plt.xlim(0,20)
 plt.legend()
-plt.ylim(-1.0,1.0)
+plt.ylim(-3.0,3.0)
 
 plt.show()
 
